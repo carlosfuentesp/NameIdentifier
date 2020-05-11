@@ -12,23 +12,23 @@ public class Main {
     public static void main(String[] args) {
 
         try {
+            NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("en-ner-person.bin")));
+            Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
+
             for (List<String> name : readCsv()) {
-                findName(name.get(0));
+                findName(name.get(0), finder, tokenizer);
             }
+
+            finder.clearAdaptiveData();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void findName(String word) throws IOException {
-        NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("en-ner-person.bin")));
-        Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
+    private static void findName(String word, NameFinderME finder, Tokenizer tokenizer) {
         String[] tokens = tokenizer.tokenize(word);
         Span[] names = finder.find(tokens);
-
         displayResult(finder.probs(names), tokens[0], names);
-
-        finder.clearAdaptiveData();
     }
 
     private static void displayResult(double[] probs, String token, Span[] names) {
