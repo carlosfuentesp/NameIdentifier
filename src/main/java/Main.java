@@ -10,14 +10,14 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            String word = "Mike";
+            String word = "William";
+
             NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("en-ner-person.bin")));
             Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
             String[] tokens = tokenizer.tokenize(word);
-
             Span[] names = finder.find(tokens);
-            double[] probs = finder.probs(names);
-            displayNames(names, probs, tokens);
+
+            displayResult(finder.probs(names), tokens[0], names);
 
             finder.clearAdaptiveData();
 
@@ -26,20 +26,13 @@ public class Main {
         }
     }
 
-    private static void displayNames(Span[] names, double[] probs, String[] tokens) {
-        for (Span name : names) {
-            StringBuilder sb = new StringBuilder();
-            for (int ti = name.getStart(); ti < name.getEnd(); ti++) {
-                sb.append(tokens[ti]).append(" ");
-            }
-            System.out.println(sb.substring(0, sb.length() - 1));
-
-            System.out.println("ttype: " + name.getType());
-
-        }
-
-        for (int i = 0; i < probs.length; i++) {
-            System.out.println("probs: " + probs[i]);
+    private static void displayResult(double[] probs, String token, Span[] names) {
+        System.out.println("Word: " + token);
+        if (names.length != 0) {
+            System.out.println("It is a person's first or last name");
+            System.out.println("Probability: " + probs[0]);
+        } else {
+            System.out.println("It is not a person's first or last name");
         }
     }
 }
