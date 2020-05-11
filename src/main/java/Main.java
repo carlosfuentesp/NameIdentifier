@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            String word = "William";
+            String word = "Carlos";
 
             NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("en-ner-person.bin")));
             Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
@@ -27,12 +27,10 @@ public class Main {
     }
 
     private static void displayResult(double[] probs, String token, Span[] names) {
-        System.out.println("Word: " + token);
         if (names.length != 0) {
-            System.out.println("It is a person's first or last name");
-            System.out.println("Probability: " + probs[0]);
+            System.out.println(token + ": Yes, " + probs[0]);
         } else {
-            System.out.println("It is not a person's first or last name");
+            System.out.println(token + ": No");
         }
     }
 }
