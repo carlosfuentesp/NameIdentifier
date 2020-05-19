@@ -12,10 +12,11 @@ import java.util.List;
 
 
 public class Main {
+
     public static void main(String[] args) {
 
         try {
-            NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("en-ner-person.bin")));
+            NameFinderME finder = new NameFinderME(new TokenNameFinderModel(new FileInputStream("src/main/java/opennlp/en-ner-person.bin")));
             Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
 
             for (List<String> names : Csv.readCsv()) {

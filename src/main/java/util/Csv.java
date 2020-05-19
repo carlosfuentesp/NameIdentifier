@@ -13,7 +13,7 @@ public class Csv {
     public static List<List<String>> readCsv() {
         List<List<String>> records = new ArrayList<List<String>>();
         try {
-            CSVReader csvReader = new CSVReader(new FileReader("names.csv"));
+            CSVReader csvReader = new CSVReader(new FileReader("names3.csv"));
             String[] values;
             while ((values = csvReader.readNext()) != null) {
                 records.add(Arrays.asList(values));
