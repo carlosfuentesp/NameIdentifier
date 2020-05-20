@@ -24,4 +24,19 @@ public class Csv {
             return Collections.emptyList();
         }
     }
+
+    public static List<List<String>> readCsv(String filename) {
+        List<List<String>> records = new ArrayList<List<String>>();
+        try {
+            CSVReader csvReader = new CSVReader(new FileReader(filename));
+            String[] values;
+            while ((values = csvReader.readNext()) != null) {
+                records.add(Arrays.asList(values));
+            }
+            return records;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
 }

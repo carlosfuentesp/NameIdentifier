@@ -11,6 +11,7 @@ import com.aliasi.dict.MapDictionary;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import java.util.ArrayList;
 import java.util.List;
+import util.Csv;
 
 // http://www.alias-i.com/lingpipe/index.html
 
@@ -43,8 +44,14 @@ public class Main {
       }
     }
 
-
+    System.out.println("FIRST NAMES");
     System.out.println(firstNames);
+
+    System.out.println("LAST NAMES");
+    System.out.println(lastNames);
+
+    System.out.println("NON DEFINED NAMES");
+    System.out.println(nonDefined);
 
   }
 
@@ -65,10 +72,21 @@ public class Main {
   static MapDictionary<String> trainedDictionary() {
     MapDictionary<String> dictionary = new MapDictionary<String>();
 
+    List<List<String>> listOfNames = Csv.readCsv("names2.csv");
+    System.out.println("list of names size: " + listOfNames.size());
+    for (List<String> row : listOfNames) {
+      String firstName = row.get(0).toUpperCase();
+      String lastName = row.get(1).toUpperCase();
+
+      dictionary.addEntry(new DictionaryEntry<String>(firstName,"FN",CHUNK_SCORE));
+      dictionary.addEntry(new DictionaryEntry<String>(lastName,"LN",CHUNK_SCORE));
+
+    }
+
     // training model
 
-    dictionary.addEntry(new DictionaryEntry<String>("Milber","FN",CHUNK_SCORE));
-    dictionary.addEntry(new DictionaryEntry<String>("Champutiz","LN",CHUNK_SCORE));
+    //dictionary.addEntry(new DictionaryEntry<String>("Milber","FN",CHUNK_SCORE));
+    //dictionary.addEntry(new DictionaryEntry<String>("Champutiz","LN",CHUNK_SCORE));
     return dictionary;
 
   }
