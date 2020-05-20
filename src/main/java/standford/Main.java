@@ -13,20 +13,23 @@ public class Main {
         Queue<String> unrecognizedQueue = new LinkedList<String>();
         List<List<String>> listOfNames = Csv.readCsv();
         for (List<String> row : listOfNames) {
-            String name = row.get(0);
-            Sentence sentence = new Sentence(name);
-            String result = sentence.nerTags().get(0);
-            if (!result.equals("PERSON")) {
-                //System.out.println(name + ": No");
-                unrecognizedQueue.add(name);
-            }
-//            else {
-//                System.out.println(name + ": Yes");
-//            }
+            String name = row.get(0).toUpperCase();
+            recognizeName(unrecognizedQueue, name);
 
         }
         System.out.println("Unrecognized names: " + unrecognizedQueue);
-        System.out.println("Total: " + unrecognizedQueue.size());
-        System.out.println("Total: " +  listOfNames.size());
+        System.out.println("Total: " + unrecognizedQueue.size() + " de " + listOfNames.size());
+    }
+
+    private static void recognizeName(Queue<String> unrecognizedQueue, String name) {
+        Sentence sentence = new Sentence(name);
+        String result = sentence.nerTags().get(0);
+        if (!result.equals("PERSON")) {
+            //System.out.println(name + ": No");
+            unrecognizedQueue.add(name);
+        }
+//            else {
+//                System.out.println(name + ": Yes");
+//            }
     }
 }
