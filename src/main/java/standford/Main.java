@@ -13,7 +13,7 @@ public class Main {
         Queue<String> unrecognizedQueue = new LinkedList<String>();
         List<List<String>> listOfNames = Csv.readCsv();
         for (List<String> row : listOfNames) {
-            String name = row.get(0).toUpperCase();
+            String name = row.get(0);
             recognizeName(unrecognizedQueue, name);
 
         }
@@ -25,11 +25,7 @@ public class Main {
         Sentence sentence = new Sentence(name);
         String result = sentence.nerTags().get(0);
         if (!result.equals("PERSON")) {
-            //System.out.println(name + ": No");
             unrecognizedQueue.add(name);
         }
-//            else {
-//                System.out.println(name + ": Yes");
-//            }
     }
 }

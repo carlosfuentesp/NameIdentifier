@@ -19,7 +19,8 @@ public class Main {
   static final double CHUNK_SCORE = 1.0;
 
   public static void main(String[] args) {
-    String myData[] = new String[]{"Milber", "Champutiz", "milber  ", "milbe"};
+    List<List<String>> listCandiateNames   = Csv.readCsv("names.csv");
+
     List<String> firstNames = new ArrayList<String>();
     List<String> lastNames = new ArrayList<String>();
     List<String> nonDefined = new ArrayList<String>();
@@ -29,8 +30,8 @@ public class Main {
     MapDictionary<String> dictionary = trainedDictionary();
     ExactDictionaryChunker dictionaryChunkerFF = exactDictionaryChunker(dictionary);
 
-    for (int i = 0; i < myData.length; ++i) {
-      String text = myData[i];
+    for (List<String> row : listCandiateNames) {
+      String text = row.get(0);
       String type = chunk(dictionaryChunkerFF,text);
 
       if (type.equals("FN")) {
