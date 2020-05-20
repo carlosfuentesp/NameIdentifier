@@ -9,6 +9,8 @@ import com.aliasi.dict.ExactDictionaryChunker;
 import com.aliasi.dict.MapDictionary;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 // http://www.alias-i.com/lingpipe/index.html
 
@@ -16,10 +18,12 @@ public class Main {
   static final double CHUNK_SCORE = 1.0;
 
   public static void main(String[] args) {
-    String myData[] = new String[]{"Milber", "Champutiz", "milber  ", " cxcv "};
+    String myData[] = new String[]{"Milber", "Champutiz", "milber  ", "milbe"};
+    List<String> firstNames = new ArrayList<String>();
+    List<String> lastNames = new ArrayList<String>();
+    List<String> nonDefined = new ArrayList<String>();
 
     System.out.println("Init");
-    System.out.println(CHUNK_SCORE);
 
     MapDictionary<String> dictionary = trainedDictionary();
     ExactDictionaryChunker dictionaryChunkerFF = exactDictionaryChunker(dictionary);
@@ -27,11 +31,20 @@ public class Main {
     for (int i = 0; i < myData.length; ++i) {
       String text = myData[i];
       String type = chunk(dictionaryChunkerFF,text);
-      System.out.println("Value: " + text + "  -- " + type);
+
+      if (type.equals("FN")) {
+        firstNames.add(text);
+      }
+      else if (type.equals("LN")) {
+        lastNames.add(text);
+      }
+      else {
+        nonDefined.add(text);
+      }
     }
 
 
-    System.out.println("finish");
+    System.out.println(firstNames);
 
   }
 
