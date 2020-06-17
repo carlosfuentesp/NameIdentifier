@@ -3,3 +3,8 @@
 *.iml
 target/
 *.gz
+.classpath
+.project
+.settings/
+.vscode/
+*.jar
